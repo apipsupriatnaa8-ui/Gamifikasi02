@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PelangiBelajar (Tanpa PHP) • Kelas 1–3</title>
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#6d28d9" />
+  <link rel="apple-touch-icon" href="assets/img/icon-192.png">
+
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+  <div class="bg-blobs" aria-hidden="true">
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
+    <div class="blob b3"></div>
+  </div>
+
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo" aria-hidden="true">🌈</div>
+      <div>
+        <div class="brand-title">PelangiBelajar</div>
+        <div class="brand-sub">Game literasi seru untuk Kelas 1–3</div>
+      </div>
+    </div>
+
+    <div class="top-actions">
+      <button class="chip" id="btn-install" title="Instal ke layar utama (PWA)" hidden>⬇️ Instal</button>
+      <button class="chip" id="btn-sound" title="Nyalakan/Matikan suara">🔊 Suara</button>
+      <button class="chip" id="btn-help" title="Bantuan">❓ Bantuan</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- HOME -->
+    <section class="card hero" id="screen-home">
+      <div class="hero-left">
+        <h1>Belajar jadi <span class="grad-text">petualangan</span>! ✨</h1>
+        <p class="lead">
+          Pilih permainan: <b>Membaca</b>, <b>Menulis</b>, <b>Menyimak</b>, dan <b>Berbicara</b>.
+          Cocok untuk anak kelas 1, 2, dan 3.
+        </p>
+
+        <div class="row gap">
+          <div class="field">
+            <label for="nama">Nama pemain</label>
+            <input id="nama" type="text" placeholder="contoh: Dinda" maxlength="20" autocomplete="off" />
+          </div>
+          <div class="field">
+            <label for="kelas">Pilih kelas</label>
+            <select id="kelas">
+              <option value="1">Kelas 1</option>
+              <option value="2">Kelas 2</option>
+              <option value="3">Kelas 3</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="menu grid">
+          <button class="tile t1" data-go="membaca">
+            <div class="tile-ico">📚</div>
+            <div class="tile-title">Membaca</div>
+            <div class="tile-sub">Pilih kata yang cocok</div>
+          </button>
+
+          <button class="tile t2" data-go="menulis">
+            <div class="tile-ico">✍️</div>
+            <div class="tile-title">Menulis</div>
+            <div class="tile-sub">Ketik kata dengan benar</div>
+          </button>
+
+          <button class="tile t3" data-go="menyimak">
+            <div class="tile-ico">👂</div>
+            <div class="tile-title">Menyimak</div>
+            <div class="tile-sub">Dengar lalu pilih</div>
+          </button>
+
+          <button class="tile t4" data-go="berbicara">
+            <div class="tile-ico">🗣️</div>
+            <div class="tile-title">Berbicara</div>
+            <div class="tile-sub">Ucapkan kata!</div>
+          </button>
+        </div>
+
+        <div class="row gap">
+          <button class="btn primary" id="btn-lihat-skor">🏆 Lihat Skor</button>
+          <button class="btn" id="btn-reset">🔄 Reset</button>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="mascot-wrap">
+          <div class="mascot" aria-hidden="true">
+            <div class="spark s1"></div>
+            <div class="spark s2"></div>
+            <div class="spark s3"></div>
+            <div class="face">
+              <div class="eye"></div><div class="eye"></div>
+              <div class="smile"></div>
+            </div>
+          </div>
+          <div class="tip">
+            <div class="tip-title">Tips Guru/Ortu</div>
+            <div class="tip-body">
+              Gunakan headset agar lebih fokus. Bimbing anak untuk menyebutkan kata dengan jelas.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GAME WRAPPER -->
+    <section class="card game" id="screen-game" hidden>
+      <div class="game-head">
+        <button class="chip" id="btn-back">⬅️ Kembali</button>
+        <div class="game-title">
+          <div id="game-name">Game</div>
+          <div class="meta">
+            <span id="meta-player">Pemain: -</span>
+            <span class="dot">•</span>
+            <span id="meta-class">Kelas: -</span>
+            <span class="dot">•</span>
+            <span id="meta-round">Ronde: 1/5</span>
+          </div>
+        </div>
+        <div class="score-pill" title="Skor saat ini">
+          ⭐ <span id="score-now">0</span>
+        </div>
+      </div>
+
+      <div class="game-body">
+        <!-- dynamic -->
+        <div id="game-area"></div>
+      </div>
+
+      <div class="game-foot">
+        <button class="btn" id="btn-skip">Lewati</button>
+        <button class="btn primary" id="btn-next">Lanjut ➜</button>
+      </div>
+    </section>
+
+    <!-- SCOREBOARD -->
+    <section class="card score" id="screen-score" hidden>
+      <div class="score-head">
+        <button class="chip" id="btn-back2">⬅️ Kembali</button>
+        <div>
+          <h2>🏆 Papan Skor</h2>
+          <p class="muted">Skor bisa tersimpan di server (PHP) atau di perangkat (localStorage) bila offline.</p>
+        </div>
+      </div>
+
+      <div class="row gap">
+        <button class="btn primary" id="btn-refresh">🔃 Muat ulang</button>
+        <button class="btn" id="btn-clear-scores">🧹 Hapus skor lokal</button>
+      </div>
+
+      <div class="table-wrap">
+        <table class="table" id="tbl-scores">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Nama</th>
+              <th>Kelas</th>
+              <th>Mode</th>
+              <th>Skor</th>
+              <th>Waktu</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <!-- MODAL -->
+  <dialog class="modal" id="modal-help">
+    <div class="modal-inner">
+      <div class="modal-head">
+        <div class="modal-title">Cara main</div>
+        <button class="chip" id="btn-close-help">✖</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="mini-grid">
+          <div class="mini">
+            <div class="mini-ico">📚</div>
+            <div><b>Membaca</b><br/>Baca kata/kalimat, pilih jawaban yang benar.</div>
+          </div>
+          <div class="mini">
+            <div class="mini-ico">✍️</div>
+            <div><b>Menulis</b><br/>Ketik kata yang diminta. Perhatikan huruf besar-kecil.</div>
+          </div>
+          <div class="mini">
+            <div class="mini-ico">👂</div>
+            <div><b>Menyimak</b><br/>Tekan tombol dengar, lalu pilih kata yang kamu dengar.</div>
+          </div>
+          <div class="mini">
+            <div class="mini-ico">🗣️</div>
+            <div><b>Berbicara</b><br/>Tekan mikrofon, ucapkan kata dengan jelas.</div>
+          </div>
+        </div>
+
+        <div class="callout">
+          <b>Catatan Android:</b> Game berbicara butuh izin mikrofon dan biasanya berjalan terbaik di Chrome.
+          Jika tidak ada tombol mikrofon, berarti browser belum mendukung.
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true" hidden></div>
+
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
